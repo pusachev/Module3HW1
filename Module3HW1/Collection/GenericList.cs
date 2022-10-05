@@ -17,7 +17,7 @@ namespace Module3HW1.Collection
             _data = new T[_capacity];
         }
 
-        public int Length { get => _data.Length; }
+        public int Count { get => _data.Length; }
         public bool IsEmpty { get => _data.Length == 0; }
         public T Current
         {
@@ -49,7 +49,17 @@ namespace Module3HW1.Collection
             _index++;
         }
 
-        public void Delete(T input)
+        public void AddRange()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Sort()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(T input)
         {
             int searchIndex = -1;
 
@@ -64,15 +74,17 @@ namespace Module3HW1.Collection
 
             if (searchIndex < 0)
             {
-                return;
+                return false;
             }
 
-            for (int i = searchIndex; i < _data.Length - 1; i++)
-            {
-                _data[i] = _data[i + 1];
-            }
+            ResizeArray(searchIndex);
 
-            Array.Resize(ref _data, _data.Length - 1);
+            return true;
+        }
+
+        public void RemoveAt(int index)
+        {
+            ResizeArray(index);
         }
 
         public void Dispose()
@@ -117,6 +129,22 @@ namespace Module3HW1.Collection
 
             _capacity *= 2;
             _data = resized;
+        }
+
+        private void ResizeArray(int index)
+        {
+            if (index >= _data.Length)
+            {
+                throw new InvalidOperationException();
+            }
+
+            // TODO Move this functionality to separate method
+            for (int i = index; i < _data.Length - 1; i++)
+            {
+                _data[i] = _data[i + 1];
+            }
+
+            Array.Resize(ref _data, _data.Length - 1);
         }
     }
 }
