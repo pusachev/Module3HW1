@@ -8,7 +8,7 @@ namespace Module3HW1.Collection
     {
         private T[] _data;
         private int _index = 0;
-        private int _currentIndex;
+        private int _currentIndex = -1;
         private int _capacity = 0;
 
         public GenericList(int capacity = 8)
@@ -36,12 +36,6 @@ namespace Module3HW1.Collection
 
         public void Add(T input)
         {
-#if DEBUG
-            if (input != null)
-            {
-                Console.WriteLine(input.ToString());
-            }
-#endif
             try
             {
                 _data[_index] = input;
@@ -63,7 +57,6 @@ namespace Module3HW1.Collection
             {
                 if (EqualityComparer<T>.Default.Equals(_data[i], input))
                 {
-                    Console.WriteLine($"Found index: {i}");
                     searchIndex = i;
                     break;
                 }
