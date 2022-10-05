@@ -11,4 +11,9 @@ for (int i = 0; i < 10; i++)
 
 list.Delete(3);
 
+foreach (var item in list)
+{
+    Console.WriteLine($"item is {item}");
+}
+
 Console.ReadLine();

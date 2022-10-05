@@ -4,26 +4,35 @@ using System.Reflection;
 
 namespace Module3HW1.Collection
 {
-    public class GenericList<T> : IEnumerator<T>
+    public class GenericList<T> : IEnumerator<T>, IEnumerable<T>
     {
         private T[] _data;
         private int _index = 0;
         private int _currentIndex;
-        private int _capacity;
-        private T _current;
+        private int _capacity = 0;
 
         public GenericList(int capacity = 8)
         {
             _capacity = capacity < 1 ? 1 : capacity;
             _data = new T[_capacity];
-            _current = default(int);
         }
 
         public int Length { get => _data.Length; }
         public bool IsEmpty { get => _data.Length == 0; }
-        public T Current { get => _current; }
+        public T Current
+        {
+            get
+            {
+                if (_currentIndex == -1 || _currentIndex >= _data.Length)
+                {
+                    throw new InvalidOperationException();
+                }
 
-        object IEnumerator.Current { get => Current; }
+                return _data[_currentIndex];
+            }
+        }
+
+        object IEnumerator.Current => throw new NotImplementedException();
 
         public void Add(T input)
         {
@@ -74,23 +83,35 @@ namespace Module3HW1.Collection
         }
 
         public void Dispose()
-        { 
+        {
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
         }
 
         public bool MoveNext()
         {
-            if (++_currentIndex < _data.Length)
+            if (_currentIndex < _data.Length - 1)
             {
-                _current = _data[_currentIndex];
+                _currentIndex++;
                 return true;
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         public void Reset()
         {
             _currentIndex = -1;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         private void Resize()
