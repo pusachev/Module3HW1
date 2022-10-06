@@ -73,11 +73,6 @@ Console.WriteLine("\nItems in product collection before add range: ");
 
 foreach (IProduct item in products)
 {
-    if (item == null)
-    {
-        continue;
-    }
-
     Console.WriteLine("\nName: {0}", item.Name);
     Console.WriteLine("Sku: {0}", item.Sku);
     Console.WriteLine("Name: {0}", item.Price);
@@ -97,11 +92,6 @@ Console.WriteLine("\nItems in product collection after added range: ");
 
 foreach (IProduct item in products)
 {
-    if (item == null)
-    {
-        continue;
-    }
-
     Console.WriteLine("\nName: {0}", item.Name);
     Console.WriteLine("Sku: {0}", item.Sku);
     Console.WriteLine("Name: {0}", item.Price);
@@ -116,11 +106,6 @@ Console.WriteLine("\nItems after sorting: ");
 
 foreach (IProduct item in products)
 {
-    if (item == null)
-    {
-        continue;
-    }
-
     Console.WriteLine("\nName: {0}", item.Name);
     Console.WriteLine("Sku: {0}", item.Sku);
     Console.WriteLine("Name: {0}", item.Price);
@@ -135,11 +120,6 @@ Console.WriteLine("Items after sorting: ");
 
 foreach (IProduct item in products)
 {
-    if (item == null)
-    {
-        continue;
-    }
-
     Console.WriteLine("\nName: {0}", item.Name);
     Console.WriteLine("Sku: {0}", item.Sku);
     Console.WriteLine("Name: {0}", item.Price);

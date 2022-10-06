@@ -109,6 +109,18 @@ namespace Module3HW1.Collection
             if (_currentIndex < _data.Length - 1)
             {
                 _currentIndex++;
+
+                while (Current == null && _currentIndex < _data.Length - 1)
+                {
+                    _currentIndex++;
+                }
+
+                if (Current == null)
+                {
+                    Reset();
+                    return false;
+                }
+
                 return true;
             }
             else
