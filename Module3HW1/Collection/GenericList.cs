@@ -49,14 +49,22 @@ namespace Module3HW1.Collection
             _index++;
         }
 
-        public void AddRange()
+        public void AddRange(IEnumerable<T> collection)
         {
-            throw new NotImplementedException();
+            foreach (T item in collection)
+            {
+                Add(item);
+            }
         }
 
         public void Sort()
         {
-            throw new NotImplementedException();
+            Array.Sort<T>(_data);
+        }
+
+        public void Sort(IComparer<T> comparer)
+        {
+            Array.Sort<T>(_data, comparer);
         }
 
         public bool Remove(T input)
@@ -105,6 +113,7 @@ namespace Module3HW1.Collection
             }
             else
             {
+                Reset();
                 return false;
             }
         }
@@ -138,7 +147,6 @@ namespace Module3HW1.Collection
                 throw new InvalidOperationException();
             }
 
-            // TODO Move this functionality to separate method
             for (int i = index; i < _data.Length - 1; i++)
             {
                 _data[i] = _data[i + 1];

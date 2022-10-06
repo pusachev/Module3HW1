@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="StyleCop.Analyzers" />
     <None Remove="Collection\" />
+    <None Remove="Comparer\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -21,5 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Collection\" />
+    <Folder Include="Comparer\" />
   </ItemGroup>
 </Project>
