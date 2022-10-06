@@ -13,6 +13,8 @@
     <None Remove="StyleCop.Analyzers" />
     <None Remove="Collection\" />
     <None Remove="Comparer\" />
+    <None Remove="Entity\" />
+    <None Remove="Factory\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -23,5 +25,7 @@
   <ItemGroup>
     <Folder Include="Collection\" />
     <Folder Include="Comparer\" />
+    <Folder Include="Entity\" />
+    <Folder Include="Factory\" />
   </ItemGroup>
 </Project>
