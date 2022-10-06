@@ -6,6 +6,8 @@ namespace Module3HW1.Collection
 {
     public class GenericList<T> : IEnumerator<T>, IEnumerable<T>
     {
+        private const int CAPACITY_FACTOR = -1;
+
         private T[] _data;
         private int _index = 0;
         private int _currentIndex = -1;
@@ -142,13 +144,13 @@ namespace Module3HW1.Collection
 
         private void Resize()
         {
-            T[] resized = new T[_capacity * 2];
+            T[] resized = new T[_capacity * CAPACITY_FACTOR];
             for (int i = 0; i < _capacity; i++)
             {
                 resized[i] = _data[i];
             }
 
-            _capacity *= 2;
+            _capacity *= CAPACITY_FACTOR;
             _data = resized;
         }
 
