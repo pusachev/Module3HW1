@@ -1,0 +1,174 @@
+﻿using System;
+using System.Collections;
+using System.Reflection;
+
+namespace Module3HW1.Collection
+{
+    public class GenericList<T> : IEnumerator<T>, IEnumerable<T>
+    {
+        private const int CAPACITYFACTOR = 2;
+        private const int DEFAULTSTEP = 1;
+        private const int DEFAULTERRORSTEP = -1;
+
+        private T[] _data;
+        private int _index = 0;
+        private int _currentIndex = -1;
+        private int _capacity = 0;
+
+        public GenericList(int capacity = 8)
+        {
+            _capacity = capacity < 1 ? 1 : capacity;
+            _data = new T[_capacity];
+        }
+
+        public int Count { get => _data.Length; }
+        public bool IsEmpty { get => _data.Length == 0; }
+        public T Current
+        {
+            get
+            {
+                if (_currentIndex == DEFAULTERRORSTEP || _currentIndex >= Count)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                return _data[_currentIndex];
+            }
+        }
+
+        object IEnumerator.Current => throw new NotImplementedException();
+
+        public void Add(T input)
+        {
+            try
+            {
+                _data[_index] = input;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Resize();
+                _data[_index] = input;
+            }
+
+            _index++;
+        }
+
+        public void AddRange(IEnumerable<T> collection)
+        {
+            foreach (T item in collection)
+            {
+                Add(item);
+            }
+        }
+
+        public void Sort()
+        {
+            Array.Sort<T>(_data);
+        }
+
+        public void Sort(IComparer<T> comparer)
+        {
+            Array.Sort<T>(_data, comparer);
+        }
+
+        public bool Remove(T input)
+        {
+            int searchIndex = -1;
+
+            for (int i = 0; i < _index - DEFAULTSTEP; i++)
+            {
+                if (EqualityComparer<T>.Default.Equals(_data[i], input))
+                {
+                    searchIndex = i;
+                    break;
+                }
+            }
+
+            if (searchIndex < 0)
+            {
+                return false;
+            }
+
+            ResizeArray(searchIndex);
+
+            return true;
+        }
+
+        public void RemoveAt(int index)
+        {
+            ResizeArray(index);
+        }
+
+        public void Dispose()
+        {
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+
+        public bool MoveNext()
+        {
+            if (_currentIndex < Count - DEFAULTSTEP)
+            {
+                _currentIndex++;
+
+                while (Current == null && _currentIndex < Count - DEFAULTSTEP)
+                {
+                    _currentIndex++;
+                }
+
+                if (Current == null)
+                {
+                    Reset();
+                    return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                Reset();
+                return false;
+            }
+        }
+
+        public void Reset()
+        {
+            _currentIndex = DEFAULTERRORSTEP;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        private void Resize()
+        {
+            T[] resized = new T[_capacity * CAPACITYFACTOR];
+            for (int i = 0; i < _capacity; i++)
+            {
+                resized[i] = _data[i];
+            }
+
+            _capacity *= CAPACITYFACTOR;
+            _data = resized;
+        }
+
+        private void ResizeArray(int index)
+        {
+            if (index >= Count)
+            {
+                throw new InvalidOperationException();
+            }
+
+            for (int i = index; i < Count - DEFAULTSTEP; i++)
+            {
+                _data[i] = _data[i + 1];
+            }
+
+            Array.Resize(ref _data, _data.Length - 1);
+        }
+    }
+}
