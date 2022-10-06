@@ -6,7 +6,9 @@ namespace Module3HW1.Collection
 {
     public class GenericList<T> : IEnumerator<T>, IEnumerable<T>
     {
-        private const int CAPACITY_FACTOR = -1;
+        private const int CAPACITYFACTOR = 2;
+        private const int DEFAULTSTEP = 1;
+        private const int DEFAULTERRORSTEP = -1;
 
         private T[] _data;
         private int _index = 0;
@@ -25,7 +27,7 @@ namespace Module3HW1.Collection
         {
             get
             {
-                if (_currentIndex == -1 || _currentIndex >= _data.Length)
+                if (_currentIndex == DEFAULTERRORSTEP || _currentIndex >= Count)
                 {
                     throw new InvalidOperationException();
                 }
@@ -73,7 +75,7 @@ namespace Module3HW1.Collection
         {
             int searchIndex = -1;
 
-            for (int i = 0; i < _index - 1; i++)
+            for (int i = 0; i < _index - DEFAULTSTEP; i++)
             {
                 if (EqualityComparer<T>.Default.Equals(_data[i], input))
                 {
@@ -108,11 +110,11 @@ namespace Module3HW1.Collection
 
         public bool MoveNext()
         {
-            if (_currentIndex < _data.Length - 1)
+            if (_currentIndex < Count - DEFAULTSTEP)
             {
                 _currentIndex++;
 
-                while (Current == null && _currentIndex < _data.Length - 1)
+                while (Current == null && _currentIndex < Count - DEFAULTSTEP)
                 {
                     _currentIndex++;
                 }
@@ -134,7 +136,7 @@ namespace Module3HW1.Collection
 
         public void Reset()
         {
-            _currentIndex = -1;
+            _currentIndex = DEFAULTERRORSTEP;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -144,24 +146,24 @@ namespace Module3HW1.Collection
 
         private void Resize()
         {
-            T[] resized = new T[_capacity * CAPACITY_FACTOR];
+            T[] resized = new T[_capacity * CAPACITYFACTOR];
             for (int i = 0; i < _capacity; i++)
             {
                 resized[i] = _data[i];
             }
 
-            _capacity *= CAPACITY_FACTOR;
+            _capacity *= CAPACITYFACTOR;
             _data = resized;
         }
 
         private void ResizeArray(int index)
         {
-            if (index >= _data.Length)
+            if (index >= Count)
             {
                 throw new InvalidOperationException();
             }
 
-            for (int i = index; i < _data.Length - 1; i++)
+            for (int i = index; i < Count - DEFAULTSTEP; i++)
             {
                 _data[i] = _data[i + 1];
             }
